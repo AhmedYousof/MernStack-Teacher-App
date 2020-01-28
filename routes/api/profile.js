@@ -8,7 +8,7 @@ const validateExperienceInput = require("../../validation/experience");
 const validateEducationInput = require("../../validation/education");
 
 const Profile = require("../../models/Profile");
-
+const Post = require("../../models/Post");
 const User = require("../../models/User");
 
 router.get("/test", (req, res) => res.json({ msg: "Profile Works" }));
@@ -233,7 +233,9 @@ router.delete(
   (req, res) => {
     Profile.findOneAndRemove({ user: req.user.id }).then(() => {
       User.findOneAndRemove({ _id: req.user.id }).then(() =>
-        res.json({ success: true })
+        Post.remove({ user: req.user.id }).then(() => {
+          res.json({ success: true });
+        })
       );
     });
   }

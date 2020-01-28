@@ -1,7 +1,7 @@
 import axios from "axios";
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 import setAuthToken from "../utils/setAuthToken";
-
+import { clearCurrentProfile } from "./profileActions";
 import jwt_decode from "jwt-decode";
 export const registerUser = (userData, history) => dispatch => {
   axios
@@ -44,4 +44,5 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
+  dispatch(clearCurrentProfile());
 };
